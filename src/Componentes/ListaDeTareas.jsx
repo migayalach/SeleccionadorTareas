@@ -10,7 +10,22 @@ const ListaDeTareas = () => {
       tarea.texto = tarea.texto.trim();
       const tareasActualizadas = [tarea, ...tareas];
       setTareas(tareasActualizadas);
-    }else return alert("Por favor introduce una tarea");
+    } else return alert("Por favor introduce una tarea");
+  };
+
+  const eliminarTarea = (id) => {
+    const tareasActualizadas = tareas.filter((tarea) => tarea.id !== id);
+    setTareas(tareasActualizadas);
+  };
+
+  const completarTarea = (id) => {
+    const tareasActualizadas = tareas.map((tarea) => {
+      if (tarea.id === id) {
+        tarea.completada = !tarea.completada;
+      }
+      return tarea;
+    });
+    setTareas(tareasActualizadas);
   };
 
   return (
@@ -29,12 +44,14 @@ const ListaDeTareas = () => {
           );
         })} */}
         {/* FORMA 2 */}
-        {tareas.map(({id, texto, completada}) => (
+        {tareas.map(({ id, texto, completada }) => (
           <Tarea
             key={id}
             id={id}
             texto={texto}
             completada={completada}
+            eliminarTarea={eliminarTarea}
+            completarTarea={completarTarea}
           />
         ))}
       </div>
